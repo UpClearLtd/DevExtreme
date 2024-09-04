@@ -27,5 +27,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: devextreme-npm-packages
-          path: ./home/runner/work/DevExtreme/DevExtreme/devextreme-*.tgz
+          path: ./artifacts/npm/devextreme-*.tgz
           retention-days: 1
