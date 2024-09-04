@@ -1,0 +1,31 @@
+name: Upclear DevExtreme package v1
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get sources
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v34
+        with:
+          node-version: "20"
+
+      - name: Install packages in devextreme repo
+        run: test -d artifacts || npm install --no-audit --no-fund
+
+      - name: Build devextreme repo
+        run: test -d artifacts || npm run all:pack
+
+      - name: Copy build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: devextreme-npm-packages
+          path: ./artifacts/npm/devextreme/devextreme-*.tgz
+          retention-days: 1
