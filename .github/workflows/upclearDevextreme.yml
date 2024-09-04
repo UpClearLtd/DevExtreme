@@ -1,0 +1,48 @@
+name: Upclear DevExtreme package
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get sources
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Restore npm cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-modules
+
+      - name: Restore artifacts cache
+        uses: actions/cache@v3
+        with:
+          path: ./artifacts
+          key: build-npm-devextreme-artifacts-${{ github.sha }}
+
+      - name: Install packages in devextreme repo
+        run: test -d artifacts || npm install --no-audit --no-fund
+
+      - name: Build devextreme repo
+        run: test -d artifacts || npm run build-npm-devextreme
+
+      - name: Pack devextreme package
+        working-directory: ./artifacts/npm/devextreme
+        run: npm pack
+
+      - name: Copy build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: devextreme-npm
+          path: ./artifacts/npm/devextreme/devextreme-*.tgz
+          retention-days: 1
