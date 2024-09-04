@@ -1,4 +1,4 @@
-Upclear DevExtreme package v1
+name: Upclear DevExtreme package v1
 
 on:
   pull_request:
