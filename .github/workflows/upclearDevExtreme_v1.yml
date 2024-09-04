@@ -1,4 +1,4 @@
-name: Upclear DevExtreme package v1
+buiname: Upclear DevExtreme package v1
 
 on:
   pull_request:
@@ -21,7 +21,7 @@ jobs:
         run: test -d artifacts || npm install --no-audit --no-fund
 
       - name: Build devextreme repo
-        run: test -d artifacts || npm run all:pack
+        run: test -d artifacts || npm run all:build
 
       - name: Copy build artifacts
         uses: actions/upload-artifact@v3
