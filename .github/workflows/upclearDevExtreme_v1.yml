@@ -21,11 +21,11 @@ jobs:
         run: test -d artifacts || npm install --no-audit --no-fund
 
       - name: Build devextreme repo
-        run: test -d artifacts || npm run all:build
+        run: test -d artifacts || npm run all:build  # npm run all:build was found in packages.json
 
       - name: Copy build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: devextreme-npm-packages
-          path: ./artifacts/npm/devextreme-*.tgz
+          path: ./artifacts/npm/devextreme-*.tgz # path was found when the first build failed. I was able to find the path in the logs.
           retention-days: 1
