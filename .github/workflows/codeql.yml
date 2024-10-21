@@ -1,7 +1,9 @@
 name: 'CodeQL'
 
-on:
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: '0 1 * * *'
+#   workflow_dispatch:
 
 jobs:
   analyze-javascript:
