@@ -1,9 +1,9 @@
 name: Publishing to GitHub Packages (scheduler)
 
-on:
-  schedule:
-    - cron: '30 19 * * *'
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: '30 19 * * *'
+#   workflow_dispatch:
 
 jobs:
   publish:
