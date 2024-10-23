@@ -1,9 +1,9 @@
 name: Send dependabot new vulnerability alerts
 
-on:
-  schedule:
-    - cron: '0 2 * * *'
-  workflow_dispatch:
+# on:
+#  schedule:
+#    - cron: '0 2 * * *'
+#  workflow_dispatch:
 
 jobs:
   fetch:
