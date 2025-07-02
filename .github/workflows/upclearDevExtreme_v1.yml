@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install packages in devextreme repo
         run: test -d artifacts || npm install --no-audit --no-fund
 
