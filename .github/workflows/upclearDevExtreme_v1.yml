@@ -20,9 +20,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        # version option optionnel : si tu veux utiliser la version spécifiée dans package.json
-        with:
-          run_install: false
 
       - name: Install dependencies
         run: pnpm install
