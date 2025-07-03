@@ -15,16 +15,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Using LTS version for better compatibility
-          cache: 'npm'
+          node-version: 20  # Using Node 20 instead of 18
 
-      - name: Clean up previous installations
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
+      - name: Clean up node_modules
+        run: rm -rf node_modules
 
       - name: Install dependencies using npm
         run: npm install --legacy-peer-deps
+
+      - name: Debug - Show installed packages
+        run: npm list --depth=0
+
+      - name: Debug - Show available scripts
+        run: npm run
 
       - name: Build devextreme repo
         run: npm run all:build
