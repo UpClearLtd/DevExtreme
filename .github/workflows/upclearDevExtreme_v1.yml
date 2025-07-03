@@ -20,9 +20,12 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-
+    
       - name: Add pnpm bin to PATH
         run: echo "PATH=${HOME}/.local/share/pnpm:$PATH" >> $GITHUB_ENV
+
+      - name: Export path
+        run: export PATH=$PATH:/path/to/command
 
       - name: Verify pnpm
         run: pnpm --version
