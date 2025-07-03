@@ -27,16 +27,10 @@ jobs:
           rm -f package-lock.json
 
       - name: Install dependencies using pnpm
-        run: |
-          pnpm install
-          echo "package-manager=pnpm@8" > .npmrc
+        run: pnpm install
 
       - name: Build devextreme repo
-        run: |
-          if [ ! -d artifacts ]; then
-            npm install --no-audit --no-fund
-          fi
-          npm run all:build
+        run: pnpm run all:build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
