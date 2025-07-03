@@ -12,23 +12,24 @@ jobs:
       - name: Get sources
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-      
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        # version option optionnel : si tu veux utiliser la version spécifiée dans package.json
+        with:
+          run_install: false
+
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install packages in devextreme repo
-        run: test -d artifacts || npm install --no-audit --no-fund
-
       - name: Build devextreme repo
-        run: test -d artifacts || npm run all:build
+        run: |
+          pnpm test -d artifacts || pnpm run all:build
 
       - name: Copy build artifacts
         uses: actions/upload-artifact@v4
