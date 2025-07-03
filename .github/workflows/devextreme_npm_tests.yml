@@ -30,7 +30,7 @@ jobs:
         run: test -d artifacts || npm install --no-audit --no-fund
 
       - name: Build devextreme repo
-        run: test -d artifacts || npm run all:build  # npm run all:build was found in packages.json
+        run: test -d artifacts || pnpm run all:build  # npm run all:build was found in packages.json
 
       - name: Copy build artifacts
         uses: actions/upload-artifact@v4
