@@ -6,35 +6,27 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: devextreme-shr2
 
     steps:
-      - name: Checkout code
+      - name: Get sources
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # Using Node 20 instead of 18
+          node-version: '20'
 
-      - name: Clean up node_modules
-        run: rm -rf node_modules
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install dependencies using npm
-        run: npm install --legacy-peer-deps
-
-      - name: Debug - Show installed packages
-        run: npm list --depth=0
-
-      - name: Debug - Show available scripts
-        run: npm run
-
-      - name: Build devextreme repo
+      - name: Build npm packages
         run: npm run all:build
 
-      - name: Upload build artifacts
+      - name: Copy build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: devextreme-npm-packages
-          path: ./artifacts/npm/devextreme-*.tgz
+          path: |
+            artifacts/npm/*.tgz
           retention-days: 1
