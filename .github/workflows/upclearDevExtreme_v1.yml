@@ -9,8 +9,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get sources
+      - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9      # ou omet si défini par "packageManager" dans package.json
+          standalone: true
+          dest: ~/setup-pnpm
+          run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -18,17 +26,18 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Ensure pnpm is on PATH
+        run: |
+          echo "::add-path::${HOME}/setup-pnpm/node_modules/.bin"
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Build devextreme repo
-        run: |
-          pnpm test -d artifacts || pnpm run all:build
+        run: pnpm test -d artifacts || pnpm run all:build
 
-      - name: Copy build artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: devextreme-npm-packages
