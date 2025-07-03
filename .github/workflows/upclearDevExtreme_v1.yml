@@ -9,37 +9,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout sources
+      - name: Get sources
         uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-    
-      - name: Add pnpm bin to PATH
-        run: echo "PATH=${HOME}/.local/share/pnpm:$PATH" >> $GITHUB_ENV
 
-      - name: Export path
-        run: export PATH=$PATH:/path/to/command
-
-      - name: Verify pnpm
-        run: pnpm --version
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: update shelljs
-        run: npm update shelljs
+      - name: Build devextreme repo
+        run: |
+          if [ ! -d artifacts ]; then
+            npm install --no-audit --no-fund
+          fi
+          npm run all:build
 
-      - name: Build DevExtreme
-        run: pnpm test -d artifacts || pnpm run all:build
-
-      - name: Upload artifacts
+      - name: Copy build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: devextreme-npm-packages
