@@ -33,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: update shelljs
+        run: npm update shelljs
+
       - name: Build DevExtreme
         run: pnpm test -d artifacts || pnpm run all:build
 
