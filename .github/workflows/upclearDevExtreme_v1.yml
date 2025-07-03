@@ -14,11 +14,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9      # ou omet si défini par "packageManager" dans package.json
-          standalone: true
-          dest: ~/setup-pnpm
-          run_install: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
