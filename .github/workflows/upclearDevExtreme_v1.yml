@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get sources
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -33,7 +33,7 @@ jobs:
           fi
           npm run all:build
 
-      - name: Copy build artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: devextreme-npm-packages
