@@ -26,8 +26,10 @@ jobs:
           rm -rf node_modules
           rm -f package-lock.json
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install dependencies using pnpm
+        run: |
+          pnpm install
+          echo "package-manager=pnpm@8" > .npmrc
 
       - name: Build devextreme repo
         run: |
