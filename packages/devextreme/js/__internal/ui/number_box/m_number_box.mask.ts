@@ -32,7 +32,7 @@ const MINUS = '-';
 const MINUS_KEY = 'minus';
 const INPUT_EVENT = 'input';
 const NUMPAD_DOT_KEY_CODE = 110;
-
+const COMPOSITIONEND_EVENT = 'compositionend';
 const CARET_TIMEOUT_DURATION = 0;
 
 export interface NumberBoxMaskProperties extends Omit<Properties, 'onChange' | 'onCopy' | 'onCut' | 'onEnterKey' | 'onFocusIn' | 'onFocusOut' | 'onInput'
@@ -644,6 +644,14 @@ class NumberBoxMask extends NumberBoxBase<NumberBoxMaskProperties> {
     const $input = this._input();
 
     eventsEngine.on($input, addNamespace(INPUT_EVENT, NUMBER_FORMATTER_NAMESPACE), (e) => {
+      // Upclear: skip formatting while an IME composition is in progress (Japanese input)
+      if (!e.originalEvent.isComposing) {
+        this._formatValue(e);
+        this._isValuePasted = false;
+      }
+    });
+
+    eventsEngine.on($input, addNamespace(COMPOSITIONEND_EVENT, NUMBER_FORMATTER_NAMESPACE), (e) => {
       this._formatValue(e);
       this._isValuePasted = false;
     });
