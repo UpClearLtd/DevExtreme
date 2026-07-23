@@ -1,0 +1,36 @@
+name: Upclear DevExtreme package v1
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get sources
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Enable corepack (pnpm pinned via packageManager)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build npm packages
+        run: pnpm run all:build
+
+      - name: Copy build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: devextreme-npm-packages
+          path: |
+            ./artifacts/npm/devextreme-*.tgz
+            ./packages/devextreme/artifacts/npm/devextreme-*.tgz
+          retention-days: 1
